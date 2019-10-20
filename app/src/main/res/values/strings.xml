@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Cutie pie</string>
+    <string name="search_button">Search recipes!</string>
+    <string name="home_title">Food Network</string>
+
+    <string name="tab_cupcake">CUPCAKE</string>
+    <string name="tab_pizza">PIZZA</string>
+    <string name="tab_drink">DRINK</string>
+    <string name="tab_dounut">DOUNUT</string>
+</resources>
