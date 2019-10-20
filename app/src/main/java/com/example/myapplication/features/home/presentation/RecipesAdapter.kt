@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.myapplication.R
 import com.example.myapplication.features.home.data.Recipe
 import kotlinx.android.synthetic.main.recipes_lise_item.view.*
@@ -37,12 +38,15 @@ class RecipesAdapter(val recipes : ArrayList<Recipe>, val context: Context) : Re
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.image.setImageResource(recipes.get(position).image)
+//        holder.image.setImageResource(recipes.get(position).image)
         holder.title.text = recipes.get(position).title
         holder.description.text = recipes.get(position).description
         holder.cookTime.text = recipes.get(position).cookTime
         holder.level.text = recipes.get(position).level
         holder.time.text = recipes.get(position).time
+        Glide.with(context)
+            .load(recipes.get(position).image)
+            .into(holder.image)
     }
 
 

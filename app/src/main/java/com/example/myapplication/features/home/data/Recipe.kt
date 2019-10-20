@@ -9,5 +9,5 @@ data class Recipe(
     val time: String,
     val cookTime: String,
     val level: String,
-    val inngredients: String
+    val ingredients: String
 ) : Serializable

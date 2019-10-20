@@ -57,7 +57,7 @@ class CupCakeListFragment : Fragment() {
     }
 
     private fun setData() {
-        var timeNow: String? =null
+        var timeNow: String? = null
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val current = LocalDateTime.now()
             val formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy. HH:mm:ss")
@@ -74,7 +74,7 @@ class CupCakeListFragment : Fragment() {
             time = timeNow,
             cookTime = "35 mins",
             level = "easy",
-            inngredients = "Preheat oven to 200 degrees. Line two baking sheets with parchment paper or a baking mat.\n" +
+            ingredients = "Preheat oven to 200 degrees. Line two baking sheets with parchment paper or a baking mat.\n" +
                     "\n" +
                     "In the bowl of a stand mixer affixed with a whisk attachment, add the egg whites. Beat on medium-low until foamy. Add cream of tartar and salt.\n" +
                     "\n" +
