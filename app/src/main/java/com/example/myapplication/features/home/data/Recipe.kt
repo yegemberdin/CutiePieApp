@@ -1,5 +1,7 @@
 package com.example.myapplication.features.home.data
 
+import java.io.Serializable
+
 data class Recipe(
     val image: Int,
     val title: String,
@@ -8,4 +10,4 @@ data class Recipe(
     val cookTime: String,
     val level: String,
     val inngredients: String
-)
+) : Serializable

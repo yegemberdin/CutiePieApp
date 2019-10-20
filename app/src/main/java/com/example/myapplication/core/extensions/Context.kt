@@ -1,4 +1,4 @@
-package com.example.myapplication.common.extensions
+package com.example.myapplication.core.extensions
 
 import android.content.Context
 import androidx.recyclerview.widget.DividerItemDecoration

@@ -2,15 +2,19 @@ package com.example.myapplication.features.home.presentation
 
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
-import com.example.myapplication.common.extensions.initRecyclerView
+import com.example.myapplication.common.ContainerActivity
+import com.example.myapplication.common.MainActivity
+import com.example.myapplication.core.extensions.initRecyclerView
+import com.example.myapplication.core.utils.IntentConstants
+import com.example.myapplication.core.utils.Screen
 import com.example.myapplication.features.home.data.Recipe
-import kotlinx.android.synthetic.main.recipes_lise_item.*
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -91,6 +95,16 @@ class CupCakeListFragment : Fragment() {
 
     private fun setAdapter() {
         recipesListAdapter = RecipesAdapter(recipes,context!!)
+        recipesListAdapter?.setOnItemClickListener(object : RecipesAdapter.ClickListener {
+            override fun onClick(pos: Int, aView: View) {
+                val recipe = recipes[pos]
+                val data = Bundle()
+                data.putSerializable(IntentConstants.RECIPE, recipe)
+                data.putString(Screen.SCREEN, Screen.RECIPE_INFO)
+                Log.d("naaz", recipe.toString())
+                ContainerActivity.start(activity, data)
+            }
+        })
         recyclerView.adapter = recipesListAdapter
     }
 
