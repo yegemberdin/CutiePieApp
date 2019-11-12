@@ -1,6 +1,7 @@
 package com.example.myapplication.features.home.presentation
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,67 +10,58 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.myapplication.R
-import com.example.myapplication.features.home.data.Recipe
+import com.example.myapplication.features.home.data.model.Recipe
 import kotlinx.android.synthetic.main.recipes_lise_item.view.*
 
-class RecipesAdapter(val recipes : ArrayList<Recipe>, val context: Context) : RecyclerView.Adapter<RecipesAdapter.ViewHolder>() {
-
-    lateinit var mClickListener: ClickListener
-
-    fun setOnItemClickListener(aClickListener: ClickListener) {
-        mClickListener = aClickListener
-    }
+class RecipesAdapter(val listener: HomeListener) : RecyclerView.Adapter<RecipesAdapter.ViewHolder>() {
 
 
-    override fun getItemCount(): Int {
-        return recipes.size
-    }
+        var list: ArrayList<Recipe> = ArrayList()
 
-
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(
-            LayoutInflater.from(context).inflate(
-                R.layout.recipes_lise_item,
-                parent,
-                false
+        override fun onCreateViewHolder(parent: ViewGroup, position: Int): ViewHolder {
+            return ViewHolder(
+                LayoutInflater.from(parent.context).inflate(R.layout.recipes_lise_item, parent, false)
             )
-        )
-    }
-
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-//        holder.image.setImageResource(recipes.get(position).image)
-        holder.title.text = recipes.get(position).title
-        holder.description.text = recipes.get(position).description
-        holder.cookTime.text = recipes.get(position).cookTime
-        holder.level.text = recipes.get(position).level
-        holder.time.text = recipes.get(position).time
-        Glide.with(context)
-            .load(recipes.get(position).image)
-            .into(holder.image)
-    }
-
-
-   inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnClickListener {
-        val image: ImageView = view.image
-        val title: TextView = view.title
-        val description: TextView = view.description
-        val cookTime: TextView = view.cookTime
-        val level: TextView = view.level
-        val time: TextView = view.time
-
-        override fun onClick(p0: View?) {
-            mClickListener.onClick(adapterPosition, p0!!)
         }
 
-        init {
-            image.setOnClickListener(this)
+        override fun getItemCount(): Int =  list.size
+
+        override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
+            viewHolder.bindView(list.get(position))
+            viewHolder.itemView.setOnClickListener {
+                listener.onClick(list.get(position))
+            }
         }
 
+        fun initRecipes(list: ArrayList<Recipe>) {
+            list.clear()
+            list.addAll(list)
+            notifyDataSetChanged()
+        }
+
+        class ViewHolder(val view: View): RecyclerView.ViewHolder(view) {
+
+            fun bindView(item: Recipe) = with(view) {
+                title.text = item.title
+                description.text = item.description
+                cookTime.text = item.cookTime
+                level.text = item.level
+                time.text = item.time
+                Glide
+                    .with(context)
+                    .load(item.image)
+                    .into(image)
+
+
+            }
+
+        }
     }
 
-    interface ClickListener {
-        fun onClick(pos: Int, aView: View)
+    interface HomeListener {
+        fun onClick(item: Recipe)
     }
-}
+
+
+
 
