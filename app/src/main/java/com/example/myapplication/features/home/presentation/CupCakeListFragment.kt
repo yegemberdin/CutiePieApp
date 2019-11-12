@@ -1,8 +1,6 @@
 package com.example.myapplication.features.home.presentation
 
-import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,10 +14,6 @@ import com.example.myapplication.core.utils.IntentConstants
 import com.example.myapplication.core.utils.Screen
 import com.example.myapplication.features.home.data.model.Recipe
 import org.koin.android.viewmodel.ext.android.viewModel
-import java.text.SimpleDateFormat
-import kotlin.collections.ArrayList
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 
 
 class CupCakeListFragment : Fragment() {

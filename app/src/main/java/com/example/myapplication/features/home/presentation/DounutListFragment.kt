@@ -1,12 +1,11 @@
 package com.example.myapplication.features.home.presentation
 
-import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
 import com.example.myapplication.common.ContainerActivity
@@ -14,11 +13,8 @@ import com.example.myapplication.core.extensions.initRecyclerView
 import com.example.myapplication.core.utils.IntentConstants
 import com.example.myapplication.core.utils.Screen
 import com.example.myapplication.features.home.data.model.Recipe
-import java.text.SimpleDateFormat
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
-import java.util.*
-import kotlin.collections.ArrayList
+import org.koin.android.viewmodel.ext.android.viewModel
+
 
 class DounutListFragment : Fragment() {
 
@@ -31,8 +27,9 @@ class DounutListFragment : Fragment() {
     }
 
     private lateinit var recyclerView: RecyclerView
-    var recipesListAdapter: RecipesAdapter? = null
-    val recipes: ArrayList<Recipe> = ArrayList()
+    private lateinit var recipesListAdapter: RecipesAdapter
+
+    val homeViewModel: HomeViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -45,8 +42,8 @@ class DounutListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         bindViews(view)
-        setData()
-        setAdapter()
+//        setData()
+//        setAdapter()
     }
 
     private fun bindViews(view: View) = with(view) {
@@ -55,48 +52,38 @@ class DounutListFragment : Fragment() {
     }
 
     private fun setData() {
-//        var timeNow: String? = null
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//            val current = LocalDateTime.now()
-//            val formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy. HH:mm:ss")
-//            timeNow = current.format(formatter)
-//        } else {
-//            val date = Date();
-//            val formatter = SimpleDateFormat("MMM dd yyyy HH:mma")
-//            timeNow = formatter.format(date)
-//        }
-//        val recipe = Recipe(
-//            image = R.drawable.donuts,
-//            title = "Woman's Glazed Donuts",
-//            description = "Perfect Yeast Doughnut",
-//            time = timeNow,
-//            cookTime = "45 mins",
-//            level = "medium",
-//            ingredients = "To make the dough: warm the milk until it is getting nice and warm when you dip your finger in it (about 105 degrees).  \n" +
-//                    "\n" +
-//                    "Add the beaten eggs and melted butter to the bowl and stir to combine.\n" +
-//                    "\n" +
-//                    "To form the donuts: Remove the dough from the fridge and roll it out on a lightly floured surface until it is 1/2 to 1/3 of an inch thick. Use a three-inch donut cutter to cut out the donuts.\n"
-//        )
-//
-//        for (x in 0..25) {
-//            recipes.add(recipe)
-//        }
+        homeViewModel.getDounuts()
+        homeViewModel.liveData.observe(this, Observer  { result ->
+            when (result) {
+                is HomeViewModel.Result.ShowLoading -> {
+                }
+                is HomeViewModel.Result.HideLoading -> {
+                }
+                is HomeViewModel.Result.Dounuts -> {
+                    recipesListAdapter.initRecipes(result.list)
+                }
+                is HomeViewModel.Result.Error -> {
+                }
+            }
+        })
     }
 
     private fun setAdapter() {
-//        recipesListAdapter = RecipesAdapter(context!!)
-//        recipesListAdapter?.setOnItemClickListener(object : RecipesAdapter.ClickListener {
-//            override fun onClick(pos: Int, aView: View) {
-//                val recipe = recipes[pos]
-//                val data = Bundle()
-//                data.putSerializable(IntentConstants.RECIPE, recipe)
-//                data.putString(Screen.SCREEN, Screen.RECIPE_INFO)
-//                Log.d("naaz", recipe.toString())
-//                ContainerActivity.start(activity, data)
-//            }
-//        })
-//        recyclerView.adapter = recipesListAdapter
+        val listener = object:
+            HomeListener {
+            override fun onClick(item: Recipe) {
+                val data = Bundle()
+                data.putSerializable(IntentConstants.RECIPE, item)
+                data.putString(Screen.SCREEN, Screen.RECIPE_INFO)
+                ContainerActivity.start(activity, data)
+            }
+
+        }
+        recipesListAdapter =
+            RecipesAdapter(
+                listener
+            )
+        recyclerView.adapter = recipesListAdapter
     }
 
 }

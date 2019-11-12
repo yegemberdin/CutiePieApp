@@ -86,10 +86,10 @@ class HomeContainerFragment : Fragment() {
 
     private fun setAdapter() {
         val list: List<Fragment> = arrayListOf(
-            CupCakeListFragment.newInstance(),
-            PizzaListFragment.newInstance(),
-            DrinkListFragment.newInstance(),
-            DounutListFragment.newInstance()
+            CupCakeListFragment.newInstance(arguments),
+            PizzaListFragment.newInstance(arguments),
+            DrinkListFragment.newInstance(arguments),
+            DounutListFragment.newInstance(arguments)
         )
         fragmentAdapter = MainFragmentAdapter(childFragmentManager, list)
         viewPager.apply {

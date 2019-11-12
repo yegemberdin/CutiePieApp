@@ -6,6 +6,15 @@ import retrofit2.Response
 import retrofit2.http.GET
 
 interface ApiService {
-    @GET("a80bk")
+    @GET("176xne")
     fun getCupcakes(): Deferred<Response<List<Recipe>>>
+
+    @GET("sd8oq")
+    fun getDounuts(): Deferred<Response<List<Recipe>>>
+
+    @GET("ubyze")
+    fun getDrinks(): Deferred<Response<List<Recipe>>>
+
+    @GET("13x9je")
+    fun getPizzas(): Deferred<Response<List<Recipe>>>
 }
