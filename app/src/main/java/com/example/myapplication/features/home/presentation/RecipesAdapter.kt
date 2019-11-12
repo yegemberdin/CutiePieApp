@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.recipes_lise_item.view.*
 class RecipesAdapter(val listener: HomeListener) : RecyclerView.Adapter<RecipesAdapter.ViewHolder>() {
 
 
-        var list: ArrayList<Recipe> = ArrayList()
+        var list1: ArrayList<Recipe> = ArrayList()
 
         override fun onCreateViewHolder(parent: ViewGroup, position: Int): ViewHolder {
             return ViewHolder(
@@ -24,18 +24,19 @@ class RecipesAdapter(val listener: HomeListener) : RecyclerView.Adapter<RecipesA
             )
         }
 
-        override fun getItemCount(): Int =  list.size
+        override fun getItemCount(): Int =  list1.size
 
         override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-            viewHolder.bindView(list.get(position))
+            viewHolder.bindView(list1.get(position))
             viewHolder.itemView.setOnClickListener {
-                listener.onClick(list.get(position))
+                listener.onClick(list1.get(position))
             }
         }
 
         fun initRecipes(list: ArrayList<Recipe>) {
-            list.clear()
-            list.addAll(list)
+            Log.d("nazerke", list.toString())
+            list1.clear()
+            list1.addAll(list)
             notifyDataSetChanged()
         }
 

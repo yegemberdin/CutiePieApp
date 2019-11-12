@@ -58,40 +58,6 @@ class CupCakeListFragment : Fragment() {
     }
 
     private fun setData() {
-//        var timeNow: String? = null
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//            val current = LocalDateTime.now()
-//            val formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy. HH:mm:ss")
-//            timeNow = current.format(formatter)
-//        } else {
-//            val date = Date();
-//            val formatter = SimpleDateFormat("MMM dd yyyy HH:mma")
-//            timeNow = formatter.format(date)
-//        }
-//        val recipe = Recipe(
-//            image = R.drawable.lemon_pie,
-//            title = "Delicious Lemon Meringues",
-//            description = "American Food snack",
-//            time = timeNow,
-//            cookTime = "35 mins",
-//            level = "easy",
-//            ingredients = "Preheat oven to 200 degrees. Line two baking sheets with parchment paper or a baking mat.\n" +
-//                    "\n" +
-//                    "In the bowl of a stand mixer affixed with a whisk attachment, add the egg whites. Beat on medium-low until foamy. Add cream of tartar and salt.\n" +
-//                    "\n" +
-//                    "Turn speed to high and continue to beat eggs until thick and glossy and stiff peaks form.\n" +
-//                    "\n" +
-//                    "Gently fold in lemon zest, lemon juice, and vanilla extract with a spatula until just combined. Do not over stir.\n" +
-//                    "\n" +
-//                    "Carefully spoon mixture in a piping bag fitted with a star tip. Pipe about one teaspoon of mixture for each cookie onto the prepared baking sheet.\n" +
-//                    "\n" +
-//                    "Bake for about 2 hours or until hardened and no longer soft and sticky. Remove from oven and allow to cool completely.\n" +
-//                    "\n" +
-//                    "Store in an airtight container."
-//        )
-//        for (x in 0..25) {
-//            recipes.add(recipe)
-//        }
         homeViewModel.getCupcakes()
         homeViewModel.liveData.observe(this, Observer  { result ->
             when (result) {
@@ -100,7 +66,6 @@ class CupCakeListFragment : Fragment() {
                 is HomeViewModel.Result.HideLoading -> {
                 }
                 is HomeViewModel.Result.Cupcakes -> {
-                    Log.d("my_dinara_result", result.list.toString())
                     recipesListAdapter.initRecipes(result.list)
 
                 }
@@ -117,7 +82,6 @@ class CupCakeListFragment : Fragment() {
                 val data = Bundle()
                 data.putSerializable(IntentConstants.RECIPE, item)
                 data.putString(Screen.SCREEN, Screen.RECIPE_INFO)
-                Log.d("naaz", item.toString())
                 ContainerActivity.start(activity, data)
             }
 
@@ -126,18 +90,6 @@ class CupCakeListFragment : Fragment() {
             RecipesAdapter(
                 listener
             )
-//        recipesListAdapter = RecipesAdapter()
-//        Log.d("nazekaa", recipes.toString())
-//        recipesListAdapter.setOnItemClickListener(object : RecipesAdapter.ClickListener {
-//            override fun onClick(pos: Int, aView: View) {
-//                val recipe = recipes[pos]
-//                val data = Bundle()
-//                data.putSerializable(IntentConstants.RECIPE, recipe)
-//                data.putString(Screen.SCREEN, Screen.RECIPE_INFO)
-//                Log.d("naaz", recipe.toString())
-//                ContainerActivity.start(activity, data)
-//            }
-//        })
         recyclerView.adapter = recipesListAdapter
     }
 
