@@ -42,8 +42,8 @@ class DounutListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         bindViews(view)
-//        setData()
-//        setAdapter()
+        setData()
+        setAdapter()
     }
 
     private fun bindViews(view: View) = with(view) {

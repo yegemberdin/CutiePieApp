@@ -94,7 +94,7 @@ class HomeContainerFragment : Fragment() {
         fragmentAdapter = MainFragmentAdapter(childFragmentManager, list)
         viewPager.apply {
             adapter = fragmentAdapter
-            offscreenPageLimit = 2
+            offscreenPageLimit = 3
             addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
                 override fun onPageScrollStateChanged(state: Int) {
 
