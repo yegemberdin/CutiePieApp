@@ -11,6 +11,12 @@
 <!--        android:layout_width="match_parent"-->
 <!--        android:layout_height="match_parent">-->
 
+        <ProgressBar
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            android:id="@+id/progressBar"/>
         <include android:layout_width="match_parent"
             android:layout_height="match_parent"
             layout="@layout/recycler_view"/>

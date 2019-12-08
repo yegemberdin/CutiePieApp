@@ -1,9 +1,15 @@
 package com.example.myapplication.features.home.presentation
 
+import android.app.Dialog
+import android.app.ProgressDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
+import androidx.annotation.RestrictTo
+import androidx.appcompat.widget.AlertDialogLayout
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
@@ -26,8 +32,10 @@ class CupCakeListFragment : Fragment() {
         }
     }
 
+
     private lateinit var recyclerView: RecyclerView
     private lateinit var recipesListAdapter: RecipesAdapter
+    private lateinit var progressBar: ProgressBar
 
     val homeViewModel: HomeViewModel by viewModel()
 
@@ -48,6 +56,7 @@ class CupCakeListFragment : Fragment() {
 
     private fun bindViews(view: View) = with(view) {
         recyclerView = findViewById(R.id.recycler_view)
+        progressBar = findViewById(R.id.progressBar)
         context.initRecyclerView(recyclerView, true)
     }
 
@@ -56,8 +65,10 @@ class CupCakeListFragment : Fragment() {
         homeViewModel.liveData.observe(this, Observer  { result ->
             when (result) {
                 is HomeViewModel.Result.ShowLoading -> {
+                    progressBar.visibility = View.VISIBLE
                 }
                 is HomeViewModel.Result.HideLoading -> {
+                    progressBar.visibility = View.GONE
                 }
                 is HomeViewModel.Result.Cupcakes -> {
                     recipesListAdapter.initRecipes(result.list)

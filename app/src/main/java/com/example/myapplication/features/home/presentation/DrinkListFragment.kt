@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
@@ -27,6 +28,7 @@ class DrinkListFragment : Fragment() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var recipesListAdapter: RecipesAdapter
+    private lateinit var progressBar: ProgressBar
 
     val homeViewModel: HomeViewModel by viewModel()
 
@@ -47,6 +49,7 @@ class DrinkListFragment : Fragment() {
 
     private fun bindViews(view: View) = with(view) {
         recyclerView = findViewById(R.id.recycler_view)
+        progressBar = findViewById(R.id.progressBar)
         context.initRecyclerView(recyclerView, true)
     }
 
@@ -55,8 +58,10 @@ class DrinkListFragment : Fragment() {
         homeViewModel.liveData.observe(this, Observer  { result ->
             when (result) {
                 is HomeViewModel.Result.ShowLoading -> {
+                    progressBar.visibility = View.VISIBLE
                 }
                 is HomeViewModel.Result.HideLoading -> {
+                    progressBar.visibility = View.GONE
                 }
                 is HomeViewModel.Result.Drinks -> {
                     recipesListAdapter.initRecipes(result.list)
